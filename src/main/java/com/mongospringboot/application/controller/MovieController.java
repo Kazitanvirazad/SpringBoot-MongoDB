@@ -47,7 +47,7 @@ public class MovieController {
 
 	@DeleteMapping(path = "deletemovie", produces = { "application/json" })
 	public ResponseEntity<ResponseObject> deleteMovie(@RequestParam(name = "cinamename") String name) {
-		ResponseObject responseObject = cinemaService.deleteCinema(name);
+		ResponseObject responseObject = cinemaService.deleteCinema(name.trim());
 
 		if (responseObject.isError())
 			return new ResponseEntity<>(responseObject, new HttpHeaders(), HttpStatus.NOT_FOUND);
@@ -57,10 +57,18 @@ public class MovieController {
 	@PutMapping(path = "updatemoviebyname", produces = { "application/json" })
 	public ResponseEntity<ResponseObject> updateMovie(@RequestParam(name = "originalname") String originaName,
 			@RequestParam(name = "newname") String newName) {
-		ResponseObject responseObject = cinemaService.updateCinemaByName(originaName, newName);
+		ResponseObject responseObject = cinemaService.updateCinemaByName(originaName.trim(), newName.trim());
 
 		if (responseObject.isError())
 			return new ResponseEntity<>(responseObject, new HttpHeaders(), HttpStatus.NOT_FOUND);
 		return new ResponseEntity<>(responseObject, new HttpHeaders(), HttpStatus.CREATED);
+	}
+
+	@GetMapping(path = "getmoviebyname", produces = { "application/json" })
+	public ResponseEntity<ResponseObject> getMovieByName(@RequestParam(name = "moviename") String name) {
+		ResponseObject responseObject = cinemaService.getCinemaByName(name.trim());
+		if (!responseObject.isError())
+			return new ResponseEntity<ResponseObject>(responseObject, new HttpHeaders(), HttpStatus.OK);
+		return new ResponseEntity<>(responseObject, new HttpHeaders(), HttpStatus.NOT_FOUND);
 	}
 }

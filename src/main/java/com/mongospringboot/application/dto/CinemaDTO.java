@@ -4,11 +4,11 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public class CinemaDTO {
-	
+
 	@NotBlank(message = "Movie id is mandatory")
 	@NotNull(message = "Movie id should not be NULL")
 	private String _id;
-	
+
 	@NotBlank(message = "Movie name is mandatory")
 	@NotNull(message = "Movie name should not be NULL")
 	private String movieName;

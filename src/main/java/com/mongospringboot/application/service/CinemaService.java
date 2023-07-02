@@ -56,7 +56,7 @@ public class CinemaService {
 
 	public ResponseObject updateCinemaByName(String originalName, String newName) {
 		if (cinemaRepo.existsByMovieName(originalName)) {
-			Cinema cinema = cinemaRepo.findByMovieName(originalName).get();
+			Cinema cinema = cinemaRepo.findByMovieName(originalName);
 			if (cinema != null) {
 				cinema.setMovieName(newName);
 				Cinema updatedCinema = cinemaRepo.save(cinema);
@@ -68,6 +68,16 @@ public class CinemaService {
 			}
 		} else {
 			return new ResponseObject(true, "Movie not found with name " + originalName);
+		}
+	}
+
+	public ResponseObject getCinemaByName(String name) {
+		Cinema[] cinema = cinemaRepo.findByMovieNameRegex(name);
+		if (cinema.length > 0 && cinema[0] != null) {
+			CinemaDTO cinemaDTO = daoToDtoConverter.copyCinemaToCinemaDTO(cinema[0]);
+			return new ResponseObject(false, cinemaDTO);
+		} else {
+			return new ResponseObject(true, "Movie not found with name " + name);
 		}
 	}
 }

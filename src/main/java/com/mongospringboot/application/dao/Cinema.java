@@ -3,7 +3,7 @@ package com.mongospringboot.application.dao;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document("cinema")
+@Document("cinemas")
 public class Cinema {
 	@Id
 	private String _id;
